@@ -2,66 +2,70 @@ package com.java_projects.calculator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
 
 public class MainController {
+    @FXML
+    public TextField firstnumber;
+    @FXML
+    protected TextField secondnumber;
+    @FXML
+    protected Button plus;
+    @FXML
+    protected Button minus;
+    @FXML
+    protected Button mult;
+    @FXML
+    protected Button divide;
+    @FXML
+    protected Label result;
+    @FXML
+    public void calculate_plus (){
+        calculate('+');
+    }
+    @FXML
+    public void calculate_minus () {
+         calculate('-');
+    }
+    @FXML
+    public void calculate_mult () {
+        calculate('*');
+    }
+    @FXML
+    public void calculate_divide () {
+        calculate('/');
+    }
+    public void calculate (char c){
+        if (firstnumber.getText().matches(".*\\d.*") && secondnumber.getText().matches(".*\\d.*")){
+            try {
+                int num1 = Integer.parseInt(firstnumber.getText());
+                int num2 = Integer.parseInt(secondnumber.getText());
+                result.setTextFill(Color.BLACK);
+                switch (c){
+                    case '+': result.setText(String.valueOf(num1+num2)); break;
+                    case '-': result.setText(String.valueOf(num1-num2)); break;
+                    case '*': result.setText(String.valueOf(num1*num2)); break;
+                    case '/':
+                        if (num2 == 0) {
+                            handle_error("Division with 0");
+                        } else {
+                            result.setText(String.valueOf(num1 / num2));
+                        }
+                }
+            } catch (Exception e){
+                handle_error("Invalid numbers");
+            }
+        } else {
+            handle_error("Invalid numbers");
+        }
+    }
 
-    @FXML
-    private TextFlow text_field;
-
-
-    @FXML
-    protected void onButtonClick_1 () {
-        onButtonClick("1")";
-    }
-    @FXML
-    protected void onButtonClick_2 () {
-        onButtonClick("2");
-    }
-    @FXML
-    protected void onButtonClick_3 () {
-        onButtonClick("3");
-    }
-    @FXML
-    protected void onButtonClick_4 () {
-        onButtonClick("4");
-    }
-    @FXML
-    protected void onButtonClick_5 () {
-        onButtonClick("5");
-    }
-    @FXML
-    protected void onButtonClick_6 () {
-        onButtonClick("6");
-    }
-    @FXML
-    protected void onButtonClick_7 () {
-        onButtonClick("7");
-    }
-    @FXML
-    protected void onButtonClick_8 () {
-        onButtonClick("8");
-    }
-    @FXML
-    protected void onButtonClick_9 () {
-        onButtonClick("9");
-    }
-    @FXML
-    protected void onButtonClick_0 () {
-        onButtonClick("0");
-    }
-    @FXML
-    protected void onButtonClick_plus () {
-        onButtonClick("+");
-    }
-    @FXML
-    protected void onButtonClick_minus () {
-        onButtonClick("-");
-    }
-
-    private void onButtonClick(String id){
-
+    public void handle_error (String message){
+        result.setTextFill(Color.RED);
+        result.setText(message);
     }
 
 }
